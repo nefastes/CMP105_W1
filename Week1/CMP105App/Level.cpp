@@ -43,7 +43,8 @@ Level::Level(sf::RenderWindow* hwnd)
 	
 	if(!texture.loadFromFile("images/unicorn-sprite1.png")) std::cout << "Error while loading the sprite texture.\n";
 	sprite.setTexture(texture);
-	sprite.setPosition(400, 400);
+	sprite.setOrigin(75, 59);
+	sprite.setPosition(position.x/2.f, 3*position.y/4.f);
 	counter = 0;
 }
 
@@ -86,6 +87,7 @@ void Level::update()
 	}
 
 	//Unicorn
+	sprite.setPosition(position.x/2.f, 3*position.y/4.f);
 	if (counter == 60)
 	{
 		texture.loadFromFile("images/unicorn-sprite2.png");
