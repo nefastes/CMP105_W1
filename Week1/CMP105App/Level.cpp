@@ -37,10 +37,13 @@ Level::Level(sf::RenderWindow* hwnd)
 	if(!backgroundTexture.loadFromFile("images/background.png")) std::cout << "Error while loading the background.\n";
 	background.setScale(sf::Vector2f(position.x/960.f, position.y/540.f));
 	background.setTexture(backgroundTexture);
+	background2.setScale(sf::Vector2f(position.x / 960.f, position.y / 540.f));
+	background2.setTexture(backgroundTexture);
+	background2.setPosition(position.x, 0);
 	
 	if(!texture.loadFromFile("images/unicorn-sprite1.png")) std::cout << "Error while loading the sprite texture.\n";
 	sprite.setTexture(texture);
-	sprite.setPosition(400, 300);
+	sprite.setPosition(400, 400);
 	counter = 0;
 }
 
@@ -57,10 +60,32 @@ void Level::handleInput()
 // Update game objects
 void Level::update()
 {
+	//Update window size
 	sf::Vector2u position = window->getSize();
+
+	//Update desired objects
 	rect3.setPosition(position.x - 60, position.y - 60);
 	circle.setPosition(0, position.y - 200);
+	
+	//Background
+	sf::Vector2f b1_prevScale = background.getScale();
+	sf::Vector2f b2_prevScale = background2.getScale();
 	background.setScale(sf::Vector2f(position.x / 960.f, position.y / 540.f));
+	background2.setScale(sf::Vector2f(position.x / 960.f, position.y / 540.f));
+	if (b1_prevScale != background.getScale() && b2_prevScale != background2.getScale())
+	{
+		background.setPosition(0, 0);
+		background2.setPosition(position.x, 0);
+	}
+	else if (background.getPosition().x <= -(float)position.x) background.setPosition(position.x, 0);
+	else if (background2.getPosition().x <= -(float)position.x) background2.setPosition(position.x, 0);
+	else
+	{
+		background.move(-(position.x / 60.f), 0);
+		background2.move(-(position.x / 60.f), 0);
+	}
+
+	//Unicorn
 	if (counter == 60)
 	{
 		texture.loadFromFile("images/unicorn-sprite2.png");
@@ -79,6 +104,7 @@ void Level::render()
 {
 	beginDraw();
 	window->draw(background);
+	window->draw(background2);
 	window->draw(rect);
 	window->draw(rect2);
 	window->draw(rect3);

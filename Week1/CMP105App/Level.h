@@ -33,5 +33,6 @@ private:
 	int counter;
 
 	sf::Sprite background;
+	sf::Sprite background2;
 	sf::Texture backgroundTexture;
 };
