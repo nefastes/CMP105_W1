@@ -27,4 +27,8 @@ private:
 
 	sf::Font font;
 	sf::Text text;
+
+	sf::Texture texture;
+	sf::Sprite sprite;
+	int counter;
 };
