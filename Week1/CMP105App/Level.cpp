@@ -34,7 +34,11 @@ Level::Level(sf::RenderWindow* hwnd)
 	text.setFillColor(sf::Color::Red);
 	text.setPosition(500, 0);
 
-	texture.loadFromFile("images/unicorn-sprite1.png");
+	if(!backgroundTexture.loadFromFile("images/background.png")) std::cout << "Error while loading the background.\n";
+	background.setScale(sf::Vector2f(position.x/960.f, position.y/540.f));
+	background.setTexture(backgroundTexture);
+	
+	if(!texture.loadFromFile("images/unicorn-sprite1.png")) std::cout << "Error while loading the sprite texture.\n";
 	sprite.setTexture(texture);
 	sprite.setPosition(400, 300);
 	counter = 0;
@@ -56,6 +60,7 @@ void Level::update()
 	sf::Vector2u position = window->getSize();
 	rect3.setPosition(position.x - 60, position.y - 60);
 	circle.setPosition(0, position.y - 200);
+	background.setScale(sf::Vector2f(position.x / 960.f, position.y / 540.f));
 	if (counter == 60)
 	{
 		texture.loadFromFile("images/unicorn-sprite2.png");
@@ -73,6 +78,7 @@ void Level::update()
 void Level::render()
 {
 	beginDraw();
+	window->draw(background);
 	window->draw(rect);
 	window->draw(rect2);
 	window->draw(rect3);

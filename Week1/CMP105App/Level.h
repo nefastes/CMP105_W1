@@ -31,4 +31,7 @@ private:
 	sf::Texture texture;
 	sf::Sprite sprite;
 	int counter;
+
+	sf::Sprite background;
+	sf::Texture backgroundTexture;
 };
